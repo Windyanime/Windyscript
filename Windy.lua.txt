@@ -1,0 +1,102 @@
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+
+       local Window = MakeWindow({
+         Hub = {
+         Title = "Script Tổng Hợp",
+         Animation = "Windy_Anime"
+         },
+        Key = {
+        KeySystem = false,
+        Title = "Key System",
+        Description = "",
+        KeyLink = "",
+        Keys = {"1234"},
+        Notifi = {
+        Notifications = true,
+        CorrectKey = "Running the Script...",
+       Incorrectkey = "The key is incorrect",
+       CopyKeyLink = "Copied to Clipboard"
+      }
+    }
+  })
+
+       MinimizeButton({
+       Image = "http://www.roblox.com/asset/?id=130616661443370",
+       Size = {60, 60},
+       Color = Color3.fromRGB(10, 10, 10),
+       Corner = true,
+       Stroke = false,
+       StrokeColor = Color3.fromRGB(255, 0, 0)
+      })
+      
+------ Tab
+     local Tab1o = MakeTab({Name = "Script Farm Blox Fruit"})
+     local Tab2o = MakeTab({Name = "Script Dead rail"})
+     local Tab3o = MakeTab({Name = "Script Kaitun Blox Fruit"})
+     local Tab4o = MakeTab({Name = "Grow of garden"})
+------- BUTTON
+    
+    AddButton(Tab1o, {
+     Name = " New Redz Hub",
+    Callback = function()
+	  local Settings = {
+    JoinTeam = "Pirates"; -- Pirates / Marines
+    Translator = true;   -- true / false
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))(Settings)
+  end
+  })
+  AddButton(Tab2o, {
+     Name = " Script đủ tính năng no key",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/DeadRails"))()
+    end
+    })
+    AddButton(Tab3o, {
+     Name = " Mukoru",
+    Callback = function()
+    getgenv().Mode = "OneClick"
+getgenv().Setting = {
+    ["Team"] = "Marines", -- Options "Pirates", "Marines"
+    ["FucusOnLevel"] = true,
+    ["Fruits"] = {  -- setting for fruits u want
+        ["Primary"] = { -- if current fruit is not in this list, eat/buy
+            "Dragon-Dragon",
+            -- u can configs add mores/remove and must end with , (comma symbol)
+        },
+        ["Normal"] = { -- it just a normal fruit list
+            "Dragon-Dragon",
+            -- u can configs add mores/remove and must end with , (comma symbol)
+        }
+        -- run this for get all fruit name `local t={};for _,v in pairs(game.ReplicatedStorage.Remotes.CommF_:InvokeServer("GetFruits"))do table.insert(t,`"{v.Name}"`)end;setclipboard(table.concat(t, "\n"))`
+    },
+    ["IdleCheck"] = 150, -- every (x) seconds if not moving rejoin
+};
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xQuartyx/QuartyzScript/main/Loader.lua"))()
+end
+})
+AddButton(Tab2o, {
+     Name = " Skull Hub cần key",
+    Callback = function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua'))()
+    end
+    })
+    AddButton(Tab4o, {
+     Name = " Vxeze",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Dex-Bear/Vxezehub/refs/heads/main/VxezeHubMain"))()
+    end
+    })
+    AddButton(Tab4o, {
+     Name = " No-lag",
+    Callback = function()
+    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/LoaderV1.lua"))()
+    end
+    })
+    AddButton(Tab4o, {
+     Name = " Đủ tính năng",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/GrowaGarden"))()
+--inf seeds it patched!!
+end
+})
