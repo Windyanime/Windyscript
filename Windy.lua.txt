@@ -2,7 +2,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 
        local Window = MakeWindow({
          Hub = {
-         Title = "Script Luân ngu",
+         Title = "Script Tuấn đẹp trai",
          Animation = "Windy_Anime"
          },
         Key = {
