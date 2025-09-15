@@ -15,7 +15,7 @@ local HttpService = game:GetService("HttpService")
 
 local player = Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
-gui.Name = "NoLagUI"
+gui.Name = "NoLagUI mã hoá"
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
@@ -27,7 +27,7 @@ local lootlabs = "https://ads.luarmor.net/get_key?for=Lootlabs_No_Lag-WAKXwZFYPy
 local linkvertise = "https://ads.luarmor.net/get_key?for=Linkvertise_No_Lag-mSdMfyEDdcbV"
 local rinku = "https://ads.luarmor.net/get_key?for=Linkvertise_No_Lag_2-xgJOzYBvECEc"
 
-isLoad = false
+isLoad = true
 local keyFilePath = "NoLagKey.txt"
 local colors = {
     background = Color3.fromRGB(20, 20, 25),
@@ -160,13 +160,13 @@ if script_key and script_key ~= "" and script_key ~= "your_key" then
        api.script_id = url
        local status = api.check_key(script_key)
 
-    if (status.code == "KEY_VALID") then
-        showNotification("Key is valid")
+    if (status.code == "Đúng_key") then
+        showNotification("Key chinhxac")
         isLoad = true
         saveKeyToFile(script_key)
         api.load_script()
         return
-    elseif (status.code == "KEY_HWID_LOCKED") then
+    elseif (status.code == "KEY_HWID_khoá") then
         showNotification("Key linked to a different HWID. Please reset it using our bot")
     elseif (status.code == "KEY_INCORRECT") then
         showNotification("Key is wrong, please input valid key or get new key!")
