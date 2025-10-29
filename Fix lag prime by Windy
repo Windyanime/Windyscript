@@ -1,0 +1,123 @@
+-- Full patch: Inserted creator label (Windy) + safe runtime protection to disable remote loadstring execution.
+-- If your original script continues beyond the truncated part below, paste the remainder after the comment "-- ORIGINAL SCRIPT CONTINUES HERE".
+
+-- === Windy Safe Credit (center screen) ===
+pcall(function()
+    local creatorName = "Script made by Windy"
+    local infoGui = Instance.new("ScreenGui")
+    infoGui.Name = "CreatorInfo"
+    infoGui.ResetOnSpawn = false
+    infoGui.IgnoreGuiInset = true
+    infoGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    -- try CoreGui first, fallback to PlayerGui if unavailable
+    local success, core = pcall(function() return game:GetService("CoreGui") end)
+    if success and core then
+        infoGui.Parent = core
+    else
+        local plr = game.Players.LocalPlayer or (game.Players:GetPlayers()[1])
+        if plr then
+            infoGui.Parent = plr:FindFirstChild("PlayerGui") or plr:WaitForChild("PlayerGui")
+        else
+            -- last fallback: parent to workspace to avoid nil; will not display in-game UI but will not error
+            infoGui.Parent = workspace
+        end
+    end
+
+    local text = Instance.new("TextLabel")
+    text.Size = UDim2.new(0, 500, 0, 100)
+    text.Position = UDim2.new(0.5, -250, 0.5, -50) -- centered
+    text.BackgroundTransparency = 0.4
+    text.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    text.TextColor3 = Color3.fromRGB(255, 255, 255)
+    text.TextScaled = true
+    text.Font = Enum.Font.SourceSansBold
+    text.Text = creatorName
+    text.Parent = infoGui
+    text.ZIndex = 9999
+
+    -- fade out then destroy
+    task.spawn(function()
+        task.wait(5)
+        for i = 0, 1, 0.05 do
+            text.TextTransparency = i
+            text.BackgroundTransparency = 0.4 + i * 0.6
+            task.wait(0.05)
+        end
+        pcall(function() infoGui:Destroy() end)
+    end)
+end)
+
+-- === Windy Safe Runtime Protection ===
+-- Override loadstring in global environment to block remote execution.
+-- This prevents any `loadstring(game:HttpGet(...))()` from running fetched code.
+pcall(function()
+    if getgenv then
+        local _orig = rawget(getgenv(), "loadstring")
+        rawset(getgenv(), "__windy_original_loadstring", _orig)
+        rawset(getgenv(), "loadstring", function(...)
+            warn("[Windy Safe Mode] loadstring was blocked for security.")
+            return function() end
+        end)
+    else
+        -- fallback if getgenv not present
+        local _orig = loadstring
+        _G.__windy_original_loadstring = _orig
+        loadstring = function(...)
+            warn("[Windy Safe Mode] loadstring was blocked for security.")
+            return function() end
+        end
+    end
+end)
+
+-- ===== ORIGINAL SCRIPT (obfuscated) =====
+return(function(...)local a,O do 
+    -- ===== Creator label injected by Windy (safe, non-invasive) =====
+    pcall(function()
+        local creatorName = "Script made by Windy"
+        local ok, core = pcall(function() return game:GetService("CoreGui") end)
+        local parentGui = nil
+        if ok and core then
+            parentGui = core
+        else
+            local plr = game.Players.LocalPlayer or (game.Players:GetPlayers()[1])
+            if plr then
+                parentGui = plr:FindFirstChild("PlayerGui") or plr:WaitForChild("PlayerGui")
+            end
+        end
+        if parentGui then
+            local infoGui = Instance.new("ScreenGui")
+            infoGui.Name = "CreatorInfo_Windy"
+            infoGui.ResetOnSpawn = false
+            infoGui.Parent = parentGui
+            local infoLabel = Instance.new("TextLabel")
+            infoLabel.Parent = infoGui
+            infoLabel.Size = UDim2.new(0, 360, 0, 56)
+            infoLabel.Position = UDim2.new(0.5, -180, 0, 18)
+            infoLabel.BackgroundTransparency = 0.5
+            infoLabel.BackgroundColor3 = Color3.fromRGB(0,0,0)
+            infoLabel.TextColor3 = Color3.fromRGB(255,255,255)
+            infoLabel.TextScaled = true
+            infoLabel.Font = Enum.Font.SourceSansBold
+            infoLabel.Text = creatorName
+            infoLabel.TextStrokeTransparency = 0.6
+            infoLabel.ZIndex = 10000
+            task.spawn(function()
+                local steps = 40
+                for i = 1, steps do
+                    infoLabel.TextTransparency = i / steps
+                    infoLabel.BackgroundTransparency = 0.5 + (i / steps) * 0.5
+                    task.wait(0.05)
+                end
+                pcall(function() infoGui:Destroy() end)
+            end)
+        end
+    end)
+    -- ===== End creator label injection =====
+
+local i=math.floor local g=math.random local M=table.remove local L=string.char local b=(43530+836262)+-879792 local x=-243374+243376 local e={}local C={}local N=-545693+545693 local r={}for i=377536+-377535,(-1686651-(-1018808))+668099,654198+-654197 do r[i]=i end repeat local i=g(236547+-236546,#r)local b=M(r,i)C[b]=L(b-(513248-513247))until#r==93347+-93347 local V={}local function f()if#V==974831-974831 then b=(b*(-222172-(-222265))+((777860+138925)+22464005341904))%(35184373010382-((169197-194785)-(-947138)))repeat x=(x*(-191521+(868588+-676847)))%(-188552+188809)until x~=457345-457344 local g=x%((((1353803-((1056454-438233)+-1421063))-183500)-1037292)+((343639-973677)+-305783))local M=(i(b/(377881-377879)^((683464-(377797-(-305654)))-(x-g)/(218695+-218663)))%(-772006+(4296064598.0-325296)))/(973421+-973419)^g local L=i((M%(-970850-(697981+-1668832)))*(752458+4294214838.0))+i(M)local e=L%(614498+-548962)local C=(L-e)/(418366-(462064-109234))local N=e%((-274205+-77726)+352187)local r=(e-N)/(-637931-(-623214-14973))local f=C%((758140-867364)-(-722191+612711))local q=(C-f)/(-769750-((-571968+809914)+(8044-1015996)))V={N,r,f,q}end return table.remove(V)end local q={}a=setmetatable({},{__index=q,__metatable=nil})function O(i,g)local M=q if M[g]then else V={}local L=C b=g%(35184371735269-(762151+-1115714))x=g%(-130476+130731)+(-113195-(-113197))local e=string.len(i)M[g]=""local N=58183+-57964 for b=(-322329+((1467875-(1608420-650203))-(600866+-1065789)))+-652251,e,-452415-(-452416)do N=((string.byte(i,b)+f())+N)%(220873-((-166233-190991)-(-577841)))M[g]=M[g]..L[N+(-894230-((-875671+447710)+-466270))]end end return g end end local i=true local g=game local M=g[a[O("xChYh7\247\168\190",27619549678942-(-848546))]]local L=g[a[O("\211\254 \184\166\135i\139",(-147467-(-910465))+22315978595210)]]local b=M[a[O("\021\135\249l/\220\179",453723+(865801+((121531-(1033760+-1935118))+27497943286259)))]]b[a[O("i\138\183(\141\130\175\227\225:\142C\215",8050453674259-(193053+(-416729+615119)))]]=(425839+-104491)+-321348 b[a[O("\172\227s\228\030\206<\147\226,\252\255\189\202",-64458+2254318353354)]]=-95847-(856887+-952734)b[a[O("ZU\r\225\\\221\158\146\n\225x\229OX3b",14495953665493-(157138+-747517))]]=448148-(418575-((861062+(-909785-(-160401-(-249491))))-(-108240)))b[a[O("L\1283\240\141\215\169\245\239\217;\234$\214\173T\154",(2788580115394-586371)-(-798401))]]=((-1657021-((-149723-(-486312))+-1012370))+1715109)+-733869 L[a[O("f1\000\154\134<\195\020\219\161\t\181R",902472+30470745914040)]]=false L[a[O("\235\031o\174u\231",5797871068644-(-547356))]]=8999980685.0-((-10650+741549)+(-489263-260951))L[a[O("j(\212\204Z%6\236\rx",31219853499032-187032)]]=396961-396961;(settings())[a[O("r\242$\188?O\253\003D",12983820646823-(-706137))]][a[O("\182\006wQ\127s\174\241\183\213\212x",148783+6147074849489)]]=a[O("Wf\170\174w\a2",-645825+9135090899649)]local x=game[a[O("\129l\230\147\144\028\029",31301253730907-(-421285))]][a[O("!\173d\241\235j65B\199\223",28838820945077-138421)]]local e=Instance[a[O("\138\v\188",-711571+1024398318483)]](a[O("\137\221\t\240{l\131.F",7975134987998-(-14626))])e[a[O("u\142\128\242\by",16067886645822-754238)]]=x:WaitForChild(a[O("t\000\182\238\244\176i\025\208",15160807684695-195159)])local C=Instance[a[O("\171\230\169",19603383655006-(-468386))]](a[O("F;\029\028:%\251\228\179",-4538+519892881850)])C[a[O("\131\170\017\244\189y",16854079749636-704004)]]=e C[a[O("\212\224J\249\219T\198\n",27813681714254-(-601010))]]=UDim2[a[O("\142\207\004",32703345373207-(-511977))]](-549988-(-549988),1016656-(998279-(-18367)),(-278545+(-1660085-(-914496)))+((450276+(-719156-(-406137)))+886877),230905+-230895)C[a[O("\190y\247\196",-56712+20175269289352)]]=UDim2[a[O("a\216%",-24287+4303000313567)]](57468-(799029-741561),-493616-(-493696),845381+-845381,914573-914543)C[a[O("\216\174\1358\197\004\169'6\236W\160#\229\027\135\182'\175\165\136X",(619131-(-371279))+16620481684278)]]=.8 C[a[O("\167\002\128\142HK\215Q\023\184\142fr^\025\129",683838+33194425340098)]]=Color3[a[O("\231B\1334\154\025\001",(16908984364773-(-529771))-(-326576))]](-710658+(1073302-362644),-302730+302730,325234-325234)C[a[O("Y.,h\194\r\189\204\149\003",3900116840735-(-20193))]]=Color3[a[O("\133\193;\187`%\164",(-205878-758399)+28112799446709)]](527125-527125,579439+-579439,1029989-(-564433+1594422))C[a[O("T\173+\023\179\143\146\224",9344163750290-90514)]]=-724739+724753 C[a[O("\244\170\150u",26216096815337-596201)]]=Enum[a[O("\241\209\219\004",20426372834500-795844)]][a[O("\252\145U\241\147\239",((356239-(-628385))+-944788)+17394616919140)]]C[a[O("h\1688\236",(28470415036560-426183)-102345)]]=a[O("'\224\134a \022",908523+34922325386005)]local N=tick()local r=-765029-(-765029)local V=965878-(811547-(-154331));(game:GetService(a[O("9=\248\185\018\022I\015\t\224",20183197438657-152257)]))[a[O("\253\a|\237\002l\243\189!",652494+23756788583218)]]:Connect(function()r=r+((135397-(-602477))-737873)local i=tick()if i-N>=-319161-(331386-650548)then V=r C[a[O("\156\133\017N",-683008+5535826521088)]]=a[O("\191\b\248\165\176",16218678413623-(292308-404637))]..tostring(V)r=842762-842762 N=i end end)for g,M in pairs(g:GetDescendants())do if M:IsA(a[O("\153\217\001\227",1556237474555-(-1025285))])or M:IsA(a[O("\014\200!\006\251",-291656+11682901128008)])or M:IsA(a[O("6\173\000E\210G\020i\014\248X\002\229\1917",(25353769025842-(-324978))-571044)])or M:IsA(a[O("\165\142\016E\247Z\147\014X",825831+32857491826201)])then M[a[O("\174\r2\172\237\239d!",5337349204273-(-349903))]]=a[O("\172q\222\177\218o\202",26378167030729-644041)]M[a[O("7\230\156\030V\028\154\139\005\233\185",336854+5648255228970)]]=53834-(292458+-238624)elseif M:IsA(a[O("\169\bb\199\206",21405236201788-(-211647-(-967675)))])or M:IsA(a[O("\161\228[|\156\195\179",6354601038063-(-749329))])then if i then M[a[O("'#\219\v\165\2254\152kCh$",(317987-(-196868))+25251639174361)]]=(566295+(-796898-544136))+774740 end elseif M:IsA(a[O("\156\227b\001\175\230k\145\202\247\190>\147\152\232",-600922+21925128940378)])or M:IsA(a[O("\014\251\158)\164",23208681475464-642440)])then M[a[O("\158\231>\235o\248\bK",(-848570+453243)+(17880951012496-685137))]]=NumberRange[a[O("\147\174\212",19444103013761-877953)]](113191+-113191)elseif M:IsA(a[O("CL\177<\212q\169\242\146",(863321+(1012+8199576301187))-(-827696))])then M[a[O("\255\154\175\139\174\\\248\188\241s\194\025Q",22183949505514-(-715798))]]=-487731-(-323804-(-47296-(-211224)))M[a[O("'\201/\170\234\252\172hm\000\179",-263054+880212984718)]]=161707-161706 elseif M:IsA(a[O("\232\209\255X",-611593+6209632539913)])or M:IsA(a[O("6\157\252Q\215)\136!\224",3908562395174-(-974810))])or M:IsA(a[O("\031\002\131\161\221",-291367+4780329873959)])then M[a[O("7e\155\253\n\231\249",993475+34322429433661)]]=false elseif M:IsA(a[O("\025\134\v\222\230\031\199\020",-83982+(846754+13252726266988))])then M[a[O("r\173\193)\1723\248@",30996425807538-5810)]]=a[O("\167,\170\211|\189\002",(1032122+-739100)+19564430083938)]M[a[O("\016\212\151\001\169\239m\218\133S\022",(-309278-(-181928+-262))+30647344115824)]]=639428-639428 M[a[O("\137\015\254\217\134>ed\137",(24282466861919-(-781910))-(-849436+272337))]]=128065607477110-(-755293)end end for i,g in pairs(L:GetChildren())do if g:IsA(a[O("\189\218D\232\202|2\167\028\153",-402573+(-36296+19302385021525))])or g:IsA(a[O("\bm\249;\014C\219\220\243:k\181\014",15646168470891-(683833+(-844766+(522662+-1093526))))])or g:IsA(a[O("\134X[\246\127\180y\148\236\1278\240\a\178%=\1600G\237\155",12854885810805-442997)])or g:IsA(a[O("\031\198\249n\213\248\rJ\158>\020",24838211360833-940097)])or g:IsA(a[O("\209\028\205x\201[\247\221\154\226\195\152\176\203\152\182\029\195",513397+31864847215243)])then g[a[O("nT\179S\216\185\190",14411123291191-(-592841))]]=false end end local function f()for i,g in pairs(game[a[O("\220\155\150U\208Y\176",468450+1336738699806)]]:GetChildren())do if g[a[O("\241\028&Lw,P\177\188",(22034243548901-(-884773))-14090)]]and g[a[O("`Nf\241\238/\187\170\153",12084243510971-(-936261))]]:FindFirstChild(a[O("^\r\168$\t\167\214%",-1001726+6674089724158)])then for i,g in pairs(g[a[O("\006t\189\017;\201\197\022Q",(13228040038026-894137)-426449)]]:GetChildren())do if g:IsA(a[O("\030\024\184\220\v\022\148\v3",17732499192109-(-837331))])or g:IsA(a[O("\178|a",28079324620604-436028)])or g:IsA(a[O("\012I`+)",19582639955825-(-549007))])or g:IsA(a[O("\r\017k\133\192",7799766697199-(((-848897+154440)+622128)+-860296))])then g:Destroy()end end local i=g[a[O("\205\205Y\151\174lQP\152",(-1001729-(-494250))+(14820080793362-(-149317)))]]:FindFirstChildOfClass(a[O("N\200\v\152M\139\026\226",(7606951014184-923960)-841200)])if i then for i,g in pairs(i:GetChildren())do if g:IsA(a[O("\180%\233[\021\242\229\236\186",(905713+-1838722)+25680718494865)])or g:IsA(a[O("\026\146f\225\030\182e\129\140\"\1345\014\194",(841488-(-926727+1624634))+34264182427427)])then g:Destroy()end end end end end game[a[O("sS\249\196H\174\255",15806527962004-719764)]][a[O("\002\140\215\027\254\158W\028\230y\223",12680296619825-909105)]]:Connect(function(i)i[a[O("\211WI\016\144i\197\222=i\203\025\023\143",-56868+35144395349541)]]:Connect(function()f()end)end)f()local q=Instance[a[O("\152\176\242",(223243+-1192158)+22016160155859)]](a[O("<\136\231\207\242y\250n\218",((1116424-1001830)+16588858635944)-(-330166))])local W=Instance[a[O("\001W\250",4740352776057-(-26759))]](a[O("\1561\018E\215F\182\027F",((150270+780829)+-1372732)+(21154217977859-10978))])q[a[O("e]\238\187*\179",-177449+29841586287913)]]=game:GetService(a[O("\213R\1872\019=\244",(552406811939-522171)-(-225944))])W[a[O("\194\201\136\150\161\252",5534276831448-1018072)]]=q W[a[O("\143\209\195",-1008898+25304559035650)]]=UDim2a[O(">W\r",(-330142-(-755761))+((-970151-(-141340))+24834875156216))]W[a[O("\181\019\214\189\vp\026\223",24836659376910-(-1019122))]]=UDim2a[O("\137OC",5766354315085-(-607975-217548))]W[a[O("\168\253\017<",2505387644870-(-244989-142141))]]=a[O("g\2554\152\251!\249\246",14490498262050-(-482270))]W[a[O("\002\1697\187\167=\023\235",-943791+(2446830915623-(-808584)))]]=Enum[a[O("k\";V~va\211",(196747+230977)+16916511488308)]][a[O("\v\150\199\a-\232",15827237673436-(-239140))]]W[a[O("\004{MW\179\v\244\b{n\245!\198X7[F \130\184\182\169",24481074559690-(-640310))]]=-28795+28796 local B={Color3[a[O("\020\158\217K10\179",648657+29000755730991)]](((-873202+-216358)-(-426152))+663663,316092+(-349819+33727),97998-97998);Color3[a[O("\226\228\191\251\173z\147",22501326816204-164812)]](1042541-1042286,781229-781102,-813765-(-813765));Color3[a[O("&u\253\239\202\v\242",((132907+-1146574)+1446797)+2524741395478)]](-631467-(-631722),48144+-47889,-433147-(-433147));Color3[a[O("\139g\003\134\151\001v",((1931298-(1030229+-47125))+-1481707)+11548884853769)]](730832-730832,679311+-679056,988237+-988237),Color3[a[O("\026'\vR\214\177\004",(-580148+-308532)+15396279635816)]](-107261-(-107261),(-100773-413160)-(-513933),-1001427+1001682);Color3[a[O("\175\254\235G1\246\195",-28294+22107382361734)]](-760946+761021,-992472-(-992472),(-59907+-214925)-(623085-(-438494+1336541))),Color3[a[O("\155\234\229\223\194\201\247",19348651852857-(-97223))]](-126173+126321,-278286+278286,642573+-642362)}local function G()local i=-183632+183633 while true do W[a[O("\025\016N\131\214 }\129\145\217",30216358963857-((-116597+249644)-351526))]]=B[i]i=i+(961319+-961318)if i>#B then i=(-290607-700271)-(364516+-1355395)end wait(242804+-242803.5)end end spawn(G)wait(-848824+848829)W[a[O("\219\"\012\244",((-979461+1936037)-(261677-(-172982)))+29714331060547)]]=a[O("\171\130Z\194\204\141`o",9844998349822-(857128+53206))]wait(777628-777625)W:Destroy()q:Destroy();(loadstring(game:HttpGet(a[O("\212B\237\224\143'\199\225\136W\130\203\014\176v\238\143(\244\003\127,G\177\199*)\248_exD*\136c\015\026\206#J)\147\242B#\178\145\220\128\170?;Fe\255\223\156\147\239\199\156\149\130\215(\149\151\176\250\199T\160\200\000?\198",29296169736659-72147)])))()
+
+-- ORIGINAL SCRIPT CONTINUES HERE
+-- If your original file is longer, paste the remaining obfuscated content below this line.
+
+-- ===== END OF FILE =====
